@@ -637,11 +637,11 @@ class TestCopy:
         cp[interpolated_key] = "XXX"
         assert cp[interpolated_key] == cp[interpolating_key]
 
-    def test_list_copy_is_shallow(self, copy_method: Any) -> None:
+    def test_list_shallow_copy_is_deepcopy(self, copy_method: Any) -> None:
         cfg = OmegaConf.create([[10, 20]])
         cp = copy_method(cfg)
-        assert id(cfg) != id(cp)
-        assert id(cfg[0]) == id(cp[0])
+        assert cfg is not cp
+        assert cfg[0] is not cp[0]
 
 
 @pytest.mark.parametrize("copy_func", [copy.copy, copy.deepcopy])
